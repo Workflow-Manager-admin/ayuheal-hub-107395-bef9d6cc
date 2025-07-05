@@ -1,31 +1,52 @@
+//
 // YouTube Data API integration for videos section.
-// Replace API_KEY with your YouTube Data API key.
-// See: https://developers.google.com/youtube/v3/docs/search/list
-const YOUTUBE_API_KEY = "YOUR_YOUTUBE_API_KEY"; // TODO: Store securely in .env
+// Fetches Ayurveda/skincare videos dynamically.
+// API key must be set in .env as REACT_APP_YOUTUBE_DATA_API_KEY.
+// Docs: https://developers.google.com/youtube/v3/docs/search/list
+
+const YOUTUBE_API_KEY = process.env.REACT_APP_YOUTUBE_DATA_API_KEY || "YOUR_YOUTUBE_DATA_API_KEY";
 
 // PUBLIC_INTERFACE
-export async function fetchAyurvedaVideos(query = "Ayurveda healing") {
+/**
+ * Fetches a list of Ayurveda/skincare YouTube videos.
+ * @param {string} query - The search query (default: Ayurveda healing).
+ * @param {number} maxResults - Max videos to return.
+ * @returns {Promise<Array>} Array of video objects (id, snippet).
+ * If API key missing, returns an error property on the array object.
+ */
+export async function fetchAyurvedaVideos(query = "Ayurveda healing", maxResults = 6) {
+  if (!YOUTUBE_API_KEY || YOUTUBE_API_KEY === "YOUR_YOUTUBE_DATA_API_KEY") {
+    // Defensive: no API key, return user-facing error
+    return Object.assign([], {
+      error:
+        "YouTube Data API key missing. Set REACT_APP_YOUTUBE_DATA_API_KEY in your .env and restart the app.",
+      videos: [],
+    });
+  }
+
   try {
-    // TODO: Replace with real fetch.
-    // For now, use demo video data.
-    return [
-      {
-        id: { videoId: "2Y2y3hHf7sI" },
-        snippet: { title: "What is Ayurveda? An Intro", thumbnails: {} }
-      },
-      {
-        id: { videoId: "J-yE5V5edmk" },
-        snippet: { title: "Daily Ayurvedic Practices", thumbnails: {} }
-      }
-    ];
-    /*
-    const url = `https://www.googleapis.com/youtube/v3/search?q=${encodeURIComponent(query)}&part=snippet&key=${YOUTUBE_API_KEY}&maxResults=6&type=video`;
+    const url =
+      "https://www.googleapis.com/youtube/v3/search" +
+      `?q=${encodeURIComponent(query)}&part=snippet&key=${YOUTUBE_API_KEY}&maxResults=${maxResults}&type=video&safeSearch=strict`;
+
     const response = await fetch(url);
+    if (!response.ok) {
+      // API or quota error
+      return Object.assign([], {
+        error: `YouTube API error: ${response.status} ${response.statusText}`,
+      });
+    }
     const data = await response.json();
+    if (!data.items || !Array.isArray(data.items) || !data.items.length) {
+      return Object.assign([], {
+        error: "No YouTube videos found for this query.",
+        videos: [],
+      });
+    }
     return data.items;
-    */
   } catch (e) {
-    // Fallback: No videos
-    return [];
+    return Object.assign([], {
+      error: "Error fetching YouTube videos. Please try again later.",
+    });
   }
 }
