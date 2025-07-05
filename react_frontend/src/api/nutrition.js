@@ -2,9 +2,19 @@
  * Nutrition API: Uses Nutritionix. Place API_KEY/ID in environment (.env).
  * Docs: https://developer.nutritionix.com/docs/v2
  * You need a Nutritionix developer account for API keys.
- * Provide REACT_APP_NUTRITIONIX_APP_ID and REACT_APP_NUTRITIONIX_API_KEY in .env.
+ * 
+ * ====== .env setup ======
+ * REACT_APP_NUTRITIONIX_APP_ID=your_nutritionix_app_id
+ * REACT_APP_NUTRITIONIX_API_KEY=your_nutritionix_key
+ * 
+ * NEVER commit actual keys to source - always use env variables!
+ * ========================
  */
-const NUTRITIONIX_APP_ID = process.env.REACT_APP_NUTRITIONIX_APP_ID || "YOUR_APP_ID";
+/** 
+ * These read your API key and App ID from process.env (.env file at project root, reloaded on app restart). 
+ * Example: For a real Nutritionix account, sign up at https://developer.nutritionix.com/admin/api.
+ */
+const NUTRITIONIX_APP_ID = process.env.REACT_APP_NUTRITIONIX_APP_ID || "YOUR_APP_ID"; // API key is pulled from .env
 const NUTRITIONIX_API_KEY = process.env.REACT_APP_NUTRITIONIX_API_KEY || "YOUR_API_KEY";
 
 // PUBLIC_INTERFACE
@@ -28,11 +38,12 @@ export async function getNutrition(query) {
 
   try {
     const url = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+    // API keys are sent here via headers, never hard-code live credentials in repo
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        "x-app-id": NUTRITIONIX_APP_ID,
-        "x-app-key": NUTRITIONIX_API_KEY,
+        "x-app-id": NUTRITIONIX_APP_ID, // <-- API App ID from .env
+        "x-app-key": NUTRITIONIX_API_KEY, // <-- API Key from .env
         "Content-Type": "application/json"
       },
       body: JSON.stringify({ query })

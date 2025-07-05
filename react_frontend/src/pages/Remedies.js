@@ -3,6 +3,12 @@ import RemedyCard from "../components/RemedyCard";
 import { getAllRemedies, getCategories } from "../api/herbalism";
 import NutritionSidebar from "../components/NutritionSidebar";
 
+/**
+ * Remedies page now integrates Nutritionix API dynamically:
+ * When user selects a remedy (clicks on a card), the NutritionSidebar
+ * auto-fetches nutrition facts for the remedy's name.
+ * NutritionSidebar handles API state, errors, and .env setup guidance.
+ */
 // PUBLIC_INTERFACE
 function Remedies() {
   const [remedies, setRemedies] = useState([]);
@@ -11,6 +17,9 @@ function Remedies() {
   const [loading, setLoading] = useState(true);
   const [loadingCats, setLoadingCats] = useState(true);
   const [err, setErr] = useState(null);
+
+  // Track which remedy is "active"/viewed for nutrition info
+  const [activeRemedy, setActiveRemedy] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -25,12 +34,23 @@ function Remedies() {
       .finally(() => setLoadingCats(false));
   }, []);
 
+  // If category or remedies change, clear current selection
+  useEffect(() => {
+    setActiveRemedy(null);
+  }, [selectedCategory]);
+
+  // Filter remedies for selected category
   const filtered =
     selectedCategory === "All"
       ? remedies
       : remedies.filter(r => r.category === selectedCategory);
 
-  // Layout: remedies content + nutrition sidebar
+  // Select a remedy to view nutrition (by click)
+  function handleRemedyClick(remedy) {
+    setActiveRemedy(remedy);
+  }
+
+  // Layout: remedies & dynamic nutrition sidebar
   return (
     <div className="ayu-remedies-page">
       <h1>Ayurvedic Remedies</h1>
@@ -59,14 +79,31 @@ function Remedies() {
           <div className="ayu-remedy-list">
             {loading && <div>Loading remedies...</div>}
             {!loading &&
-              filtered.map(remedy => <RemedyCard key={remedy.id} remedy={remedy} />)}
+              filtered.map(remedy => (
+                <div
+                  key={remedy.id}
+                  style={{
+                    border: activeRemedy && activeRemedy.id === remedy.id ? "2px solid var(--ayucare-primary)" : "none",
+                    cursor: "pointer"
+                  }}
+                  tabIndex={0}
+                  aria-label={`View nutrition facts for ${remedy.name}`}
+                  onClick={() => handleRemedyClick(remedy)}
+                  onKeyDown={e => {
+                    if (e.key === "Enter" || e.key === " ") handleRemedyClick(remedy);
+                  }}
+                >
+                  <RemedyCard remedy={remedy} />
+                </div>
+              ))}
             {!loading && filtered.length === 0 && (
               <div>No remedies found for this category.</div>
             )}
           </div>
         </section>
         <aside className="ayu-blog-sidebar" style={{ flex: 1, minWidth: 220, maxWidth: 320, paddingLeft: "1rem" }}>
-          <NutritionSidebar />
+          {/* NutritionSidebar now takes a `remedyName` prop for dynamic fetch */}
+          <NutritionSidebar remedyName={activeRemedy ? activeRemedy.name : null} />
         </aside>
       </div>
     </div>
