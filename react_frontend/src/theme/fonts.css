@@ -1,0 +1,10 @@
+/* Import Playfair Display and Lato from Google Fonts (herbal, premium, clear) */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@400;700&display=swap');
+
+body, .ayu-main-content, .ayu-btn, .ayu-remedy-card, .ayu-navbar {
+  font-family: 'Lato', Arial, sans-serif;
+}
+
+.ayu-brand, .ayu-navbar .ayu-brand-name, h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}

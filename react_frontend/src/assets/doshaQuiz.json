@@ -1,0 +1,14 @@
+[
+  {
+    "question": "What is your body frame?",
+    "options": ["Thin & light", "Medium & muscular", "Stocky & heavy"]
+  },
+  {
+    "question": "How is your skin?",
+    "options": ["Dry & cool", "Warm & oily", "Thick & moist"]
+  },
+  {
+    "question": "Preferred climate?",
+    "options": ["Warm", "Cool", "Dry"]
+  }
+]

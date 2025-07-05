@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "title": "Top 5 Ayurvedic Herbs for Immunity",
+    "author": "Dr. Meera Joshi",
+    "date": "2023-10-02",
+    "category": "Immunity",
+    "image": "/herb-placeholder.jpg",
+    "summary": "Discover potent immune-boosting herbs and their practical uses.",
+    "url": "https://ayucare.com/blog/herbs-immunity"
+  },
+  {
+    "id": "2",
+    "title": "Skincare for Monsoon: Ayurveda Edition",
+    "author": "AyuCare Editorial",
+    "date": "2023-11-21",
+    "category": "Skincare",
+    "image": "/blog-placeholder.jpg",
+    "summary": "Monsoon is tricky for skin! Here’s how Ayurveda keeps you balanced.",
+    "url": "https://ayucare.com/blog/skincare-monsoon"
+  }
+]

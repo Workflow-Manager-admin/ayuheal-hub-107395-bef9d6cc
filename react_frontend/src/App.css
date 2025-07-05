@@ -1,0 +1,316 @@
+/* AyuCare styles, extending base theme in index.css with herbal palette
+   Palette: #4e944f (primary), #f5e9ce (secondary), #a68a64 (accent) */
+
+:root {
+  --ayucare-primary: #4e944f;
+  --ayucare-secondary: #f5e9ce;
+  --ayucare-accent: #a68a64;
+  --ayucare-brand-dark: #2f493c;
+  --bg-primary: var(--ayucare-secondary);
+  --bg-secondary: #fcfbf4;
+  --card-bg: #fff;
+  --navbar-bg: var(--ayucare-primary);
+  --footer-bg: var(--ayucare-accent);
+  --text-primary: #272b25;
+  --text-secondary: #446044;
+  --card-shadow: 0 2px 10px rgba(76, 136, 76, 0.06);
+}
+
+[data-theme="dark"] {
+  --bg-primary: #23271c;
+  --bg-secondary: #1C2310;
+  --card-bg: #2f493c;
+  --navbar-bg: #23271c;
+  --footer-bg: #343222;
+  --text-primary: #f8f7f3;
+  --text-secondary: #c9e5ca;
+}
+
+body, .ayu-root-bg {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background .2s, color .2s;
+  min-height: 100vh;
+}
+
+.ayu-main-content {
+  margin-top: 60px;
+  min-height: 70vh;
+  padding: 0 0 70px 0;
+}
+
+/* NAVBAR */
+.ayu-navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: var(--navbar-bg);
+  color: #fff;
+  z-index: 10;
+  height: 60px;
+  box-shadow: 0 2px 6px #0002;
+  font-family: 'Lato', Arial, sans-serif;
+}
+.ayu-navbar-container {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto;
+  height: 100%;
+  padding: 0 16px;
+}
+.ayu-brand {
+  display: flex; align-items: center;
+  font-size: 2rem;
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+  color: #fff;
+}
+.ayu-navbar-toggle {
+  display: none;
+  background: none; border: none; color: #fff; font-size: 2rem;
+}
+.ayu-navbar-links {
+  display: flex; gap: 1.5rem; align-items: center;
+}
+.ayu-navbar-links a, .ayu-navbar-links .ayu-theme-btn {
+  color: #fff;
+  background: none;
+  border: none;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .16s;
+}
+.ayu-navbar-links .ayu-theme-btn { font-size: 1.2rem; }
+.ayu-navbar-links a.active { border-bottom: 2px solid var(--ayucare-accent); padding-bottom: 2px; }
+
+@media (max-width: 700px) {
+  .ayu-navbar-links { 
+    flex-direction: column; 
+    display: none; 
+    position: absolute; top:60px; right:0; left:0;
+    background: var(--navbar-bg); 
+    padding: 1rem 0;
+  }
+  .ayu-navbar-links.open { display: flex; }
+  .ayu-navbar-toggle { display: block; }
+}
+
+/* BTN */
+.ayu-btn, .ayu-btn-sm {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--ayucare-primary);
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 1.05rem;
+  font-family: inherit;
+  font-weight: 700;
+  transition: background .15s, color .15s, box-shadow .15s;
+  margin: 4px 0;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 6px #618e5231;
+}
+.ayu-btn:hover, .ayu-btn:focus,
+.ayu-btn-sm:hover, .ayu-btn-sm:focus {
+  background: var(--ayucare-brand-dark);
+  color: #fff;
+  text-decoration: none;
+}
+.ayu-btn-sm { font-size: 0.92rem; padding: 6px 16px; }
+
+/* HERO */
+.ayu-hero {
+  background: linear-gradient(110deg, var(--ayucare-secondary) 85%, var(--ayucare-accent) 100%);
+  padding: 72px 6% 40px 6%;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  text-align: center;
+}
+.ayu-hero h1 { font-size: 2.8rem; margin-bottom: 0.6rem; }
+.ayu-hero p { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 1rem; }
+
+/* REMEDY, CARDS, SECTION */
+.ayu-section {
+  padding: 2rem 0 2.5rem;
+  text-align: center;
+}
+.ayu-remedy-list {
+  display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; margin-top: 0.5rem;
+}
+.ayu-remedy-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: var(--card-shadow);
+  padding: 1.3rem 1.4rem;
+  min-width: 220px;
+  max-width: 320px;
+  display: flex; flex-direction: column; align-items: center;
+  margin-bottom: 1rem;
+  transition: box-shadow .15s, transform .2s;
+}
+.ayu-remedy-card:hover {
+  box-shadow: 0 4px 24px #4e944f19; transform: translateY(-6px) scale(1.03);
+}
+.ayu-remedy-img {
+  border-radius: 14px;
+  width: 72px; height: 72px; object-fit: cover; background: #eee;
+}
+.ayu-remedy-cat {
+  font-size: 0.9rem; background: #f6efd8; color: #7a5723;
+  padding: 2px 14px; border-radius: 18px; margin: 0.5em 0 0.8em 0;
+}
+.ayu-categories-bar {
+  display: flex; gap: 0.4rem; flex-wrap: wrap; margin: 1.0em 0 0.5em;
+}
+.ayu-category-btn {
+  background: var(--ayucare-accent);
+  color: #fff;
+  border: none; outline: none;
+  padding: 7px 18px;
+  border-radius: 16px;
+  cursor: pointer;
+  margin-right: 0.6em;
+  font-size: 0.99rem;
+  margin-bottom: 8px;
+  opacity: 0.8;
+  transition: opacity .1s;
+}
+.ayu-category-btn.selected,
+.ayu-category-btn:hover { background: var(--ayucare-primary); opacity: 1; }
+
+/* WEATHER */
+.ayu-weather-widget {
+  background: linear-gradient(95deg, #d5ebbe 70%, #f5e9ce 100%);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px #9ae29a14;
+  padding: 1.2rem 2rem 1.2rem;
+  margin: 2rem auto 1.2rem;
+  max-width: 400px;
+  text-align: left;
+}
+.ayu-weather-info {
+  margin-top: 6px;
+  font-size: 1.1em;
+}
+.ayu-skincare-tip { margin-top: 8px; color: #296c42; font-size: 1rem; }
+.ayu-weather-widget input[type=text] {
+  border-radius: 12px; padding: 4px 10px; border: 1px solid #bfd7a8; margin-left: 0.5em; font-size: 1em;
+}
+
+/* BLOG */
+.ayu-blog-layout {
+  display: flex; flex-direction: row;
+  gap: 2.2rem; max-width: 1200px; margin: 0 auto;
+}
+.ayu-blog-main { flex:3; }
+.ayu-blog-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 1.3em 2em 1em 1.5em;
+  margin-bottom: 1.6em;
+  box-shadow: var(--card-shadow);
+  display: flex; flex-direction: column;
+}
+.ayu-blog-img {
+  width: 100%; max-width: 400px; border-radius: 10px; margin-bottom: 0.5rem; object-fit: cover;
+}
+.ayu-blog-cat {
+  background: var(--ayucare-primary);
+  color: #fff;
+  border-radius: 9px;
+  font-size: 0.86em; padding: 2px 10px; margin: 0.2em 0;
+  align-self: flex-start;
+}
+.ayu-blog-meta {
+  color:#888; font-size:.91em; margin-bottom: .1em;
+}
+.ayu-link { color: var(--ayucare-primary); text-decoration: underline;}
+.ayu-blog-sidebar {
+  flex:1; padding-left: 1rem; position: sticky; top: 80px;
+  min-width:220px;max-width:320px;
+}
+.ayu-nutrition-sidebar {
+  background: #fffbe7;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #efe3af34;
+  padding: 0.9em 1.2em 1.3em 1em;   
+  font-size: 1em;
+  margin-bottom: 2em;
+}
+.ayu-nutrition-sidebar form {
+  display: flex; margin-bottom: 0.6em; gap:4px;
+}
+.ayu-nutrition-sidebar form input {
+  flex:2; border:1px solid #e5d7a0; border-radius: 12px; padding: 4px 10px; font-size: 1em;
+}
+
+/* VIDEO */
+.ayu-videos-page { padding-bottom: 2em; }
+.ayu-video-search-bar {
+  display: flex; gap: .6em; align-items: center; max-width:440px; margin: 1.3em auto 1.8em;
+}
+.ayu-video-search-bar input[type=text] {
+  flex:2; padding: 8px 12px; border-radius: 14px; border: 1px solid #cbeee4;
+  font-size: 1.06em;
+}
+.ayu-video-grid {
+  display: flex; flex-wrap: wrap; gap: 2em;
+  justify-content: left;
+}
+.ayu-yt-embed {
+  background: #fff; border-radius: 11px; padding: 0.6em;
+  box-shadow: var(--card-shadow);
+  max-width: 360px;
+  margin-bottom: 1em;
+}
+
+/* QUIZ, CONTACT */
+.ayu-quiz-question, .ayu-contact-form {
+  background: var(--card-bg);
+  padding: 1.5em 1.2em;
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  max-width: 480px; margin: 2em auto;
+}
+.ayu-quiz-options { display: flex; flex-direction: column; gap: 1em; }
+.ayu-dosha-result {
+  background: var(--card-bg); border-radius: 18px; box-shadow: var(--card-shadow);
+  max-width: 390px; margin: 2em auto;
+  padding: 1.4em 1em;
+  text-align: center;
+}
+.ayu-dosha-img { margin: 1em 0 1em 0; }
+.ayu-contact-form input, .ayu-contact-form textarea {
+  width: 100%; padding: 10px 12px; margin: 8px 0;
+  border: 1px solid #cfd4c4; border-radius: 10px; font-size: 1.1em; background: #fff;
+}
+.ayu-contact-whatsapp { margin: 1.7em auto 0; text-align: center; }
+.ayu-contact-success { margin: 2.5em auto; }
+.ayu-divider { margin: 1.8em 0; border: 0; border-top: 1.5px solid #e5e1cc; }
+
+/* FOOTER */
+.ayu-footer {
+  background: var(--footer-bg);
+  color: #fff;
+  padding: 22px 0;
+  position: fixed; left: 0; right: 0; bottom: 0;
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 -2px 8px #0002;
+}
+.ayu-footer-content { display: flex; gap: 2.2em; align-items: center; font-size: 1.08em; }
+.ayu-footer-content a { color: #fff; text-decoration: underline; margin: 0 6px; }
+
+/* Mobile/responsive tweaks */
+@media (max-width: 1000px) {
+  .ayu-blog-layout { flex-direction: column; gap: 1.5em; }
+  .ayu-blog-sidebar { min-width:unset; max-width:unset; padding:0; position:static; }
+}
+@media (max-width: 700px) {
+  .ayu-main-content { padding-bottom: 120px;}
+  .ayu-footer-content { flex-direction: column; gap: .4em; }
+  .ayu-remedy-list { gap: 0.8em;}
+  .ayu-section, .ayu-hero { padding: 1rem 2vw; }
+  .ayu-blog-card { padding: 1em 1em 0.6em 1em; }
+}
