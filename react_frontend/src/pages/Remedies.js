@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import RemedyCard from "../components/RemedyCard";
 import { getAllRemedies, getCategories } from "../api/herbalism";
+import NutritionSidebar from "../components/NutritionSidebar";
 
 // PUBLIC_INTERFACE
 function Remedies() {
@@ -29,36 +30,44 @@ function Remedies() {
       ? remedies
       : remedies.filter(r => r.category === selectedCategory);
 
+  // Layout: remedies content + nutrition sidebar
   return (
     <div className="ayu-remedies-page">
       <h1>Ayurvedic Remedies</h1>
       {err && <div style={{ color: "red", margin: "1em" }}>{err}</div>}
-      <div className="ayu-categories-bar">
-        <button
-          className={`ayu-category-btn${selectedCategory === "All" ? " selected" : ""}`}
-          onClick={() => setSelectedCategory("All")}
-        >
-          All
-        </button>
-        {!loadingCats &&
-          categories.map(cat => (
+      <div style={{ display: "flex", gap: "2.2rem", alignItems: "flex-start" }}>
+        <section style={{ flex: 3, minWidth: 0 }}>
+          <div className="ayu-categories-bar">
             <button
-              key={cat}
-              className={`ayu-category-btn${selectedCategory === cat ? " selected" : ""}`}
-              onClick={() => setSelectedCategory(cat)}
+              className={`ayu-category-btn${selectedCategory === "All" ? " selected" : ""}`}
+              onClick={() => setSelectedCategory("All")}
             >
-              {cat}
+              All
             </button>
-          ))}
-        {loadingCats && <span>Loading categories...</span>}
-      </div>
-      <div className="ayu-remedy-list">
-        {loading && <div>Loading remedies...</div>}
-        {!loading &&
-          filtered.map(remedy => <RemedyCard key={remedy.id} remedy={remedy} />)}
-        {!loading && filtered.length === 0 && (
-          <div>No remedies found for this category.</div>
-        )}
+            {!loadingCats &&
+              categories.map(cat => (
+                <button
+                  key={cat}
+                  className={`ayu-category-btn${selectedCategory === cat ? " selected" : ""}`}
+                  onClick={() => setSelectedCategory(cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            {loadingCats && <span>Loading categories...</span>}
+          </div>
+          <div className="ayu-remedy-list">
+            {loading && <div>Loading remedies...</div>}
+            {!loading &&
+              filtered.map(remedy => <RemedyCard key={remedy.id} remedy={remedy} />)}
+            {!loading && filtered.length === 0 && (
+              <div>No remedies found for this category.</div>
+            )}
+          </div>
+        </section>
+        <aside className="ayu-blog-sidebar" style={{ flex: 1, minWidth: 220, maxWidth: 320, paddingLeft: "1rem" }}>
+          <NutritionSidebar />
+        </aside>
       </div>
     </div>
   );
